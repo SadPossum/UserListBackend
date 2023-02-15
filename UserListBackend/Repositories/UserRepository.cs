@@ -38,16 +38,16 @@ namespace UserListBackend.Repositories
                 query = query.Where(a => a.DateOfBirth == dateOfBirthSearch);
             }
 
+            if (sortCriterias != null)
+            {
+                query = query.SortBy(sortCriterias);
+            }
+
             if (paginationFilter != null)
             {
                 query = query
                     .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
                     .Take(paginationFilter.PageSize);
-            }
-
-            if (sortCriterias != null)
-            {
-                query = query.SortBy(sortCriterias);
             }
 
             int count = await query.CountAsync();
