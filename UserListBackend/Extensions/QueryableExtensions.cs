@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using UserListBackend.Models.LogicModels;
 using Microsoft.EntityFrameworkCore.Query;
+using UserListBackend.Models.LogicModels;
 
 namespace UserListBackend.Extensions
 {
@@ -35,7 +35,8 @@ namespace UserListBackend.Extensions
                     throw new NullReferenceException(nameof(sortCriteria.PropertyName));
                 }
 
-                PropertyInfo? property = typeof(T).GetProperty(sortCriteria.PropertyName);
+                string pascalCasePropertyName = char.ToUpper(sortCriteria.PropertyName[0]) + sortCriteria.PropertyName.Substring(1);
+                PropertyInfo? property = typeof(T).GetProperty(pascalCasePropertyName);
 
                 if (property == null)
                 {
