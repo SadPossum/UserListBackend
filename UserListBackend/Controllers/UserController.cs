@@ -27,7 +27,7 @@ namespace UserListBackend.Controllers
         [HttpGet]
         public async Task<ListResponse<User>> Get([FromQuery] ListUserRequest request)
         {
-            _logger.LogInformation($"Retrieving users with parameters");
+            _logger.LogInformation($"Retrieving list of ${nameof(User)} items with parameters");
 
             (IEnumerable<User> entries, int count, int totalCount) = await _repository.GetUsersAsync(
                 request.FullName,
@@ -47,7 +47,7 @@ namespace UserListBackend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            _logger.LogInformation($"Retrieving user with id {id}");
+            _logger.LogInformation($"Retrieving ${nameof(User)} with id {id}");
 
             User? user = await _repository.GetUserAsync(id);
 
@@ -63,7 +63,7 @@ namespace UserListBackend.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
-            _logger.LogInformation("Adding user");
+            _logger.LogInformation($"Adding ${nameof(User)}");
 
             ValidationResult validation = _userValidator.Validate(user);
 
@@ -74,14 +74,14 @@ namespace UserListBackend.Controllers
 
             int userId = await _repository.AddUserAsync(user);
 
-            return CreatedAtAction(nameof(Get), new { id = userId }, userId);
+            return CreatedAtAction(nameof(Post), new { id = userId }, userId);
         }
 
         // PUT user/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] User user)
         {
-            _logger.LogInformation($"Updating user with id {id}");
+            _logger.LogInformation($"Updating ${nameof(User)} with id {id}");
 
             User? existingUser = await _repository.GetUserAsync(id);
 
@@ -100,7 +100,7 @@ namespace UserListBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            _logger.LogInformation($"Deleting user with id {id}");
+            _logger.LogInformation($"Deleting ${nameof(User)} with id {id}");
 
             await _repository.DeleteUserAsync(id);
 

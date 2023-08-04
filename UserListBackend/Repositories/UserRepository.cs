@@ -23,7 +23,7 @@ namespace UserListBackend.Repositories
             PaginationFilter? paginationFilter = null,
             List<SortCriteria>? sortCriterias = null)
         {
-            _logger.LogInformation("Retrieving all users");
+            _logger.LogInformation($"Retrieving list of ${nameof(User)} items");
 
             IQueryable<User> query = _context.Users.AsQueryable();
             int totalCount = await _context.Users.CountAsync();
@@ -58,7 +58,7 @@ namespace UserListBackend.Repositories
 
         public async Task<User?> GetUserAsync(int id)
         {
-            _logger.LogInformation($"Retrieving user with id {id}");
+            _logger.LogInformation($"Retrieving ${nameof(User)} with id {id}");
             return await _context.Users.FindAsync(id);
         }
 
@@ -72,7 +72,7 @@ namespace UserListBackend.Repositories
 
         public async Task<int> UpdateUserAsync(User user)
         {
-            _logger.LogInformation($"Updating user with id {user.Id}");
+            _logger.LogInformation($"Updating ${nameof(User)} with id {user.Id}");
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return user.Id;
@@ -80,7 +80,7 @@ namespace UserListBackend.Repositories
 
         public async Task DeleteUserAsync(int id)
         {
-            _logger.LogInformation($"Deleting user with id {id}");
+            _logger.LogInformation($"Deleting ${nameof(User)} with id {id}");
             User? user = await _context.Users.FindAsync(id);
             if (user != null)
             {
